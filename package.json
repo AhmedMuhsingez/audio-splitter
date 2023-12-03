@@ -5,6 +5,7 @@
 	"license": "MIT",
 	"type": "module",
 	"dependencies": {
+		"prompt-sync": "^4.2.0",
 		"seedrandom": "^3.0.5"
 	}
 }

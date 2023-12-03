@@ -1,9 +1,14 @@
 import fs from "fs/promises";
 import path from "path";
+// import { readLine } from "readline";
+// import * as readline from "node:readline/promises";
+import promptSync from "prompt-sync";
+const prompt = promptSync();
 
 const inFolder = "./in/names";
 
 const processFiles = async () => {
+	const amount = prompt("Enter subtraction amount: ");
 	try {
 		const inFiles = await fs.readdir(inFolder);
 
@@ -12,7 +17,7 @@ const processFiles = async () => {
 			const inFilename = path.parse(inFile).name;
 
 			// Subtract 1 from the filename
-			const newFilename = parseInt(inFilename, 10) - 1;
+			const newFilename = parseInt(inFilename, 10) - amount;
 
 			// Create the output file path
 			const outFilePath = path.join(
