@@ -14,7 +14,7 @@ const run = async () => {
 		.forEach(async (inFile) => {
 			const inFilename = inFile.split(".")[0];
 
-			const outFolder = await deleteOldAndCreateNewFolder(`./out${inFilename}`);
+			const outFolder = await deleteOldAndCreateNewFolder(`./out`);
 
 			const paddedOutFolder = await deleteOldAndCreateNewFolder(
 				`./final/out-pad${inFilename}`
@@ -23,7 +23,10 @@ const run = async () => {
 			const com = await exec(
 				`sox "${inFolder}/${inFilename}.wav" "${outFolder}/outfile.wav" silence  1 2 0.5% 2 0.5 0.5% : newfile : restart `
 			);
-			const startingNumber = Number(inFilename.split("-")[0]);
+			// const startingNumber = Number(inFilename.split("-")[0]);
+
+			//Number/Name of the first file and how it starts:
+			const startingNumber = 1000;
 			const outFiles = await fs.readdir(outFolder);
 			await Promise.all(
 				outFiles.map(async (outFile, outIndex) => {

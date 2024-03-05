@@ -1,5 +1,7 @@
 import fs from "fs/promises";
 import path from "path";
+import fsNormal from "fs";
+
 // import { readLine } from "readline";
 // import * as readline from "node:readline/promises";
 import promptSync from "prompt-sync";
@@ -18,6 +20,7 @@ const processFiles = async () => {
 
 			// Subtract 1 from the filename
 			const newFilename = parseInt(inFilename, 10) - amount;
+			if (!fsNormal.existsSync("./out/newNames")) await fs.mkdir("./out/newNames");
 
 			// Create the output file path
 			const outFilePath = path.join(
