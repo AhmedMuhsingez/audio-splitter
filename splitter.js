@@ -5,7 +5,16 @@ import util from "util";
 import seedrandom from "seedrandom";
 
 const exec = util.promisify(execCallback);
+const deleteOldAndCreateNewFolder = async (folderName) => {
+	if (fsNormal.existsSync(folderName)) await fs.rm(folderName, { recursive: true });
+	if (!fsNormal.existsSync(folderName)) await fs.mkdir(folderName);
+	return folderName;
+};
 
+const generateRandomPadding = (rng) => {
+	const randomValue = Math.round((rng() * 0.3 + 0.4) * 1000) / 1000;
+	return randomValue;
+};
 const run = async () => {
 	const inFolder = "./in";
 	const inFiles = await fs.readdir(inFolder);
@@ -14,19 +23,19 @@ const run = async () => {
 		.forEach(async (inFile) => {
 			const inFilename = inFile.split(".")[0];
 
-			const outFolder = await deleteOldAndCreateNewFolder(`./out`);
+			const outFolder = await deleteOldAndCreateNewFolder(`./out-needsPadding`);
 
 			const paddedOutFolder = await deleteOldAndCreateNewFolder(
-				`./final/out-pad${inFilename}`
+				`./out-padded-${inFilename}`
 			);
 
 			const com = await exec(
-				`sox "${inFolder}/${inFilename}.wav" "${outFolder}/outfile.wav" silence  1 2 0.5% 2 0.5 0.5% : newfile : restart `
+				`sox "${inFolder}/${inFilename}.wav" "${outFolder}/notPadded.wav" silence  1 2 0.5% 2 0.5 0.5% : newfile : restart `
 			);
 			// const startingNumber = Number(inFilename.split("-")[0]);
 
 			//Number/Name of the first file and how it starts:
-			const startingNumber = 1000;
+			const startingNumber = 1500;
 			const outFiles = await fs.readdir(outFolder);
 			await Promise.all(
 				outFiles.map(async (outFile, outIndex) => {
@@ -41,18 +50,8 @@ const run = async () => {
 					);
 				})
 			);
+			console.log(`Processing of splitting and padding ${inFile} complete.`);
 			if (fsNormal.existsSync(outFolder)) await fs.rm(outFolder, { recursive: true });
 		});
 };
 run();
-
-const deleteOldAndCreateNewFolder = async (folderName) => {
-	if (fsNormal.existsSync(folderName)) await fs.rm(folderName, { recursive: true });
-	if (!fsNormal.existsSync(folderName)) await fs.mkdir(folderName);
-	return folderName;
-};
-
-const generateRandomPadding = (rng) => {
-	const randomValue = Math.round((rng() * 0.3 + 0.4) * 1000) / 1000;
-	return randomValue;
-};
