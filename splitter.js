@@ -3,6 +3,9 @@ import fs from "fs/promises";
 import fsNormal from "fs";
 import util from "util";
 import seedrandom from "seedrandom";
+import promptSync from "prompt-sync";
+const prompt = promptSync();
+const startingNumber = parseInt(prompt("Enter starting number of the files: "), 10);
 
 const exec = util.promisify(execCallback);
 const deleteOldAndCreateNewFolder = async (folderName) => {
@@ -15,6 +18,7 @@ const generateRandomPadding = (rng) => {
 	const randomValue = Math.round((rng() * 0.3 + 0.4) * 1000) / 1000;
 	return randomValue;
 };
+
 const run = async () => {
 	const inFolder = "./in";
 	const inFiles = await fs.readdir(inFolder);
@@ -35,7 +39,6 @@ const run = async () => {
 			// const startingNumber = Number(inFilename.split("-")[0]);
 
 			//Number/Name of the first file and how it starts:
-			const startingNumber = 1500;
 			const outFiles = await fs.readdir(outFolder);
 			await Promise.all(
 				outFiles.map(async (outFile, outIndex) => {
