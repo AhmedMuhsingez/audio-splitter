@@ -27,10 +27,10 @@ const run = async () => {
 		.forEach(async (inFile) => {
 			const inFilename = inFile.split(".")[0];
 
-			const outFolder = await deleteOldAndCreateNewFolder(`./out-needsPadding`);
+			const outFolder = await deleteOldAndCreateNewFolder(`./out/out-needsPadding`);
 
 			const paddedOutFolder = await deleteOldAndCreateNewFolder(
-				`./out-padded-${inFilename}`
+				`./out/out-padded-${inFilename}`
 			);
 
 			const com = await exec(
