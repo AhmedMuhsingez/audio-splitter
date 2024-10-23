@@ -1,8 +1,8 @@
 ## **This is a private project. All rights reserved and unlicensed usage will lead to law enforcement action.**
 
-#### So far, this project contains of two main functions:
+#### So far, this project consists of two main functions:
 
-1.  #### Numerical File Name fixes: This is helpful if you want to add or subtract numbers from your files names in batch.
+1.  #### Numerical File Name fixes: This is helpful if you want to add or subtract numbers from your files names in batch. E.g: your files names start from 1000.something up to 1500.something, using this function can help you remove/add numbers from the file name.
 
     All you have to do is to add the files to the “**in**” folder in the root of the project. After that, type node fileName.js in the terminal, and answer the follow-up prompts that will show:
 
